@@ -22,18 +22,23 @@ class CompanyListCubit extends Cubit<CompanyListState> {
   }
 
   void onSearchValueChange(String searchQuery, List<CompanyModel> companyList) {
+    emit(CompanyListState.inProgress());
+
+    final List<String> searchWords = searchQuery.trim().split(' ');
     final List<CompanyModel> searchCollection =
-        companyList
-            .where(
-              (CompanyModel companyData) =>
-                  companyData.isin.toLowerCase().contains(
-                    searchQuery.toLowerCase(),
-                  ) ||
-                  ('${companyData.rating} . ${companyData.companyName ?? ''}')
-                      .toLowerCase()
-                      .contains(searchQuery.toLowerCase()),
-            )
-            .toList();
+        companyList.where((CompanyModel companyData) {
+          bool value = false;
+          for (final String key in searchWords) {
+            if (companyData.isin.toLowerCase().contains(key.toLowerCase()) ||
+                ('${companyData.rating} . ${companyData.companyName ?? ''}')
+                    .toLowerCase()
+                    .contains(key.toLowerCase())) {
+              value = true;
+              break;
+            }
+          }
+          return value;
+        }).toList();
     emit(CompanyListState.success(data: searchCollection));
   }
 }

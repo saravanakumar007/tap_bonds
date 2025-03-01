@@ -92,7 +92,6 @@ class _CompanyListPageState extends State<CompanyListPage> {
             SizedBox(height: 10),
             Expanded(
               child: BlocBuilder<CompanyListCubit, CompanyListState>(
-                buildWhen: (previous, current) => true,
                 builder: (context, state) {
                   if (state is CompanyListStateInitial ||
                       state is CompanyListStateInProgress) {

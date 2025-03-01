@@ -18,8 +18,10 @@ class CompanyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String defaultData = 'INE06E50';
+    final bool hasQuery = searchQuery.trim().isNotEmpty;
 
     return ListTile(
+      titleAlignment: ListTileTitleAlignment.center,
       contentPadding: EdgeInsets.all(0),
       leading: Container(
         height: 60,
@@ -35,158 +37,115 @@ class CompanyWidget extends StatelessWidget {
         ),
       ),
 
-      title: Wrap(
-        children: [
-          ...highlightOccurrences(
-            'INE06E50',
-            searchQuery,
-            GoogleFonts.inter(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: HexColor('#101828'),
+      title: RichText(
+        text: TextSpan(
+          children: [
+            WidgetSpan(
+              child: Container(
+                padding: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  color:
+                      hasQuery &&
+                              defaultData.toLowerCase() ==
+                                  searchQuery.trim().toLowerCase()
+                          ? HexColor('#fbecd7')
+                          : Colors.transparent,
+                ),
+                child: Text(
+                  defaultData,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: HexColor('#101828'),
+                  ),
+                ),
+              ),
             ),
-          ),
 
-          ...highlightOccurrences(
-            companyModel.isin.replaceAll(defaultData, ''),
-            searchQuery,
-            GoogleFonts.inter(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: HexColor('#101828'),
+            WidgetSpan(
+              child: Container(
+                padding: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  color:
+                      hasQuery &&
+                              isMatched(
+                                searchQuery,
+                                companyModel.isin.replaceAll(defaultData, ''),
+                              )
+                          ? HexColor('#fbecd7')
+                          : Colors.transparent,
+                ),
+                child: Text(
+                  companyModel.isin.replaceAll(defaultData, ''),
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: HexColor('#101828'),
+                  ),
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-      subtitle: Wrap(
-        children: [
-          ...highlightOccurrences(
-            '${companyModel.rating} . ${companyModel.companyName ?? ''}',
-            searchQuery,
-            GoogleFonts.inter(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: HexColor('#99A1AF'),
-            ),
-          ),
-        ],
+
+      subtitle: builtHighlightTextWidgets(
+        searchQuery,
+        '${companyModel.rating} . ${companyModel.companyName ?? ''}',
       ),
       trailing: Icon(Icons.navigate_next, color: HexColor('#1447E6')),
     );
   }
 
-  List<InlineSpan> _builtHighlightWidgets(
-    String searchQuery,
-    String source,
-    TextStyle textStyle,
-  ) {
-    final List<String> renderTexts = [];
-    final List<InlineSpan> renderWidgets = [];
-    final List<String> searchWords = searchQuery.split(' ');
-
-    final List<Match> matches = <Match>[];
-    for (final String token in searchQuery.trim().toLowerCase().split(' ')) {
-      matches.addAll(token.allMatches(source.toLowerCase()));
-    }
-
-    if (matches.isEmpty) {}
-    matches.sort((Match a, Match b) => a.start.compareTo(b.start));
-
-    int lastMatchEnd = 0;
-
-    for (final Match match in matches) {
-      if (match.end <= lastMatchEnd) {
-        // already matched -> ignore
-      } else if (match.start <= lastMatchEnd) {
-        renderTexts.add(source.substring(lastMatchEnd, match.end));
-      } else {
-        renderTexts.add(source.substring(lastMatchEnd, match.start));
-
-        renderTexts.add(source.substring(match.start, match.end));
-      }
-
-      if (lastMatchEnd < match.end) {
-        lastMatchEnd = match.end;
+  bool isMatched(String query, String data) {
+    final List<String> searchWords = query.trim().split(' ');
+    for (final String word in searchWords) {
+      if (word.toLowerCase() == data.toLowerCase()) {
+        return true;
       }
     }
-
-    if (lastMatchEnd < source.length) {
-      renderTexts.add(source.substring(lastMatchEnd, source.length));
-    }
-    return renderWidgets;
+    return false;
   }
 
-  List<Widget> highlightOccurrences(
-    String source,
-    String query,
-    TextStyle textStyle,
-  ) {
-    Color matchColor = HexColor('#fae8d7');
-    if (query == null || query.isEmpty) {
-      return <Widget>[Text(source, style: textStyle)];
+  Text builtHighlightTextWidgets(String query, String data) {
+    final TextStyle textStyle = GoogleFonts.inter(
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      color: HexColor('#99A1AF'),
+    );
+
+    if (searchQuery.trim().isEmpty) {
+      return Text(data, style: textStyle);
     }
 
-    final List<Match> matches = <Match>[];
-    for (final String token in query.trim().toLowerCase().split(' ')) {
-      matches.addAll(token.allMatches(source.toLowerCase()));
-    }
+    final textSpans = List.empty(growable: true);
 
-    if (matches.isEmpty) {
-      return <Widget>[Text(source, style: textStyle)];
-    }
-    matches.sort((Match a, Match b) => a.start.compareTo(b.start));
-
-    int lastMatchEnd = 0;
-    final List<Widget> children = <Widget>[];
-
-    for (final Match match in matches) {
-      if (match.end <= lastMatchEnd) {
-        // already matched -> ignore
-      } else if (match.start <= lastMatchEnd) {
-        children.add(
-          Container(
-            decoration: BoxDecoration(
-              color: matchColor,
-              borderRadius: BorderRadius.circular(8),
+    final List<String> searchWords = query.trim().split(' ');
+    final List<String> contentWords = data.trim().split(' ');
+    final List<String> words = [];
+    for (final String content in contentWords) {
+      for (final String word in searchWords) {
+        if (!words.contains(content)) {
+          words.add(content);
+          textSpans.add(
+            WidgetSpan(
+              child: Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color:
+                      content.toLowerCase() == word.toLowerCase()
+                          ? HexColor('#fbecd7')
+                          : Colors.transparent,
+                ),
+                child: Text(content, style: textStyle),
+              ),
             ),
-            padding: EdgeInsets.all(5),
-            child: Text(
-              source.substring(lastMatchEnd, match.end),
-              style: textStyle,
-            ),
-          ),
-        );
-      } else {
-        children.add(
-          Text(source.substring(lastMatchEnd, match.start), style: textStyle),
-        );
-
-        children.add(
-          Container(
-            decoration: BoxDecoration(
-              color: matchColor,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            padding: EdgeInsets.all(5),
-            child: Text(
-              source.substring(match.start, match.end),
-              style: textStyle,
-            ),
-          ),
-        );
-      }
-
-      if (lastMatchEnd < match.end) {
-        lastMatchEnd = match.end;
+          );
+        }
       }
     }
-
-    if (lastMatchEnd < source.length) {
-      children.add(
-        Text(source.substring(lastMatchEnd, source.length), style: textStyle),
-      );
-    }
-
-    return children;
+    return Text.rich(TextSpan(children: <InlineSpan>[...textSpans]));
   }
 }
