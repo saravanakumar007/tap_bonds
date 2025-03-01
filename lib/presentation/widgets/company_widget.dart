@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tap_bonds/data/models/company_model/company_model.dart';
 import 'package:tap_bonds/utils/extensions.dart';
@@ -21,6 +22,9 @@ class CompanyWidget extends StatelessWidget {
     final bool hasQuery = searchQuery.trim().isNotEmpty;
 
     return ListTile(
+      onTap: () {
+        context.go('/company-detail');
+      },
       titleAlignment: ListTileTitleAlignment.center,
       contentPadding: EdgeInsets.all(0),
       leading: Container(
