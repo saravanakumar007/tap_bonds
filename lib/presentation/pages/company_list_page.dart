@@ -129,8 +129,4 @@ class _CompanyListPageState extends State<CompanyListPage> {
       ),
     );
   }
-
-  Widget _builtCompanyList(CompanyListState state) {
-    return Container();
-  }
 }
