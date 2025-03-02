@@ -13,4 +13,7 @@ abstract class CompanyDetailState with _$CompanyDetailState {
 
   const factory CompanyDetailState.success({required CompanyDetailModel data}) =
       CompanyDetailStateSuccess;
+
+  const factory CompanyDetailState.failure({required String message}) =
+      CompanyDetailStateFailure;
 }

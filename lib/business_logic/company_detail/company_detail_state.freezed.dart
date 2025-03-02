@@ -181,4 +181,70 @@ $CompanyDetailModelCopyWith<$Res> get data {
 }
 }
 
+/// @nodoc
+
+
+class CompanyDetailStateFailure extends CompanyDetailState {
+  const CompanyDetailStateFailure({required this.message}): super._();
+  
+
+ final  String message;
+
+/// Create a copy of CompanyDetailState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$CompanyDetailStateFailureCopyWith<CompanyDetailStateFailure> get copyWith => _$CompanyDetailStateFailureCopyWithImpl<CompanyDetailStateFailure>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CompanyDetailStateFailure&&(identical(other.message, message) || other.message == message));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,message);
+
+@override
+String toString() {
+  return 'CompanyDetailState.failure(message: $message)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $CompanyDetailStateFailureCopyWith<$Res> implements $CompanyDetailStateCopyWith<$Res> {
+  factory $CompanyDetailStateFailureCopyWith(CompanyDetailStateFailure value, $Res Function(CompanyDetailStateFailure) _then) = _$CompanyDetailStateFailureCopyWithImpl;
+@useResult
+$Res call({
+ String message
+});
+
+
+
+
+}
+/// @nodoc
+class _$CompanyDetailStateFailureCopyWithImpl<$Res>
+    implements $CompanyDetailStateFailureCopyWith<$Res> {
+  _$CompanyDetailStateFailureCopyWithImpl(this._self, this._then);
+
+  final CompanyDetailStateFailure _self;
+  final $Res Function(CompanyDetailStateFailure) _then;
+
+/// Create a copy of CompanyDetailState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
+  return _then(CompanyDetailStateFailure(
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
 // dart format on

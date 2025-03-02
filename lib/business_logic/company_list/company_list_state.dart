@@ -13,4 +13,7 @@ abstract class CompanyListState with _$CompanyListState {
 
   const factory CompanyListState.success({required List<CompanyModel> data}) =
       CompanyListStateSuccess;
+
+  const factory CompanyListState.failure({required String message}) =
+      CompanyListStateFailure;
 }
