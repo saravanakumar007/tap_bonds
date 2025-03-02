@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tap_bonds/business_logic/company_financials/company_financials_cubit.dart';
@@ -31,6 +32,7 @@ class FinancialViewWidget extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
+                        HapticFeedback.mediumImpact();
                         BlocProvider.of<CompanyFinancialsCubit>(
                           context,
                         ).changeTabType(TabType.isinAnalysisTab);
@@ -65,6 +67,7 @@ class FinancialViewWidget extends StatelessWidget {
                     SizedBox(width: 20),
                     InkWell(
                       onTap: () {
+                        HapticFeedback.mediumImpact();
                         BlocProvider.of<CompanyFinancialsCubit>(
                           context,
                         ).changeTabType(TabType.prosAndConsTab);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tap_bonds/business_logic/company_financials/company_financials_cubit.dart';
@@ -67,6 +68,7 @@ class FinancialDataWidget extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
+                        HapticFeedback.mediumImpact();
                         BlocProvider.of<CompanyFinancialsCubit>(
                           context,
                         ).changeChartType(FinancialChartType.ebitda);
@@ -109,6 +111,7 @@ class FinancialDataWidget extends StatelessWidget {
 
                     InkWell(
                       onTap: () {
+                        HapticFeedback.mediumImpact();
                         BlocProvider.of<CompanyFinancialsCubit>(
                           context,
                         ).changeChartType(FinancialChartType.revenue);
