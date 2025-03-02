@@ -58,6 +58,7 @@ class _CompanyListPageState extends State<CompanyListPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
+              key: ValueKey('search_bar'),
               controller: searchtextEditingController,
               onChanged: (value) {
                 BlocProvider.of<CompanyListCubit>(context).onSearchValueChange(

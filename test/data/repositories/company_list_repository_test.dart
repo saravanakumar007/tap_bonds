@@ -19,7 +19,7 @@ void main() {
     repository = CompanyListRepository(ApiClientService());
   });
 
-  group('User Repository Test', () {
+  group('Company List Repository Test', () {
     test('Should return user data when API call is successful', () async {
       when(
         mockClient.get(Uri.parse('https://eol122duf9sy4de.m.pipedream.net')),

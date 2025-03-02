@@ -6,6 +6,8 @@ import 'package:tap_bonds/business_logic/company_list/company_list_state.dart';
 import 'package:tap_bonds/data/models/company_model/company_model.dart';
 import 'package:tap_bonds/data/repositories/company_list_repository.dart';
 
+import '../utils/helpers.dart';
+
 class CompanyListRepositoryMock extends Mock implements CompanyListRepository {}
 
 void main() {
@@ -18,43 +20,8 @@ void main() {
     companyListCubit = CompanyListCubit(companyListRepositoryMock);
   });
 
-  final List<dynamic> jsonData = [
-    {
-      "logo":
-          "https://cdn.brandfetch.io/idVluv2fZa/w/200/h/200/theme/dark/icon.jpeg?c=1dxbfHSJFAPEGdCLU4o5B",
-      "isin": "INE06E501754",
-      "rating": "AAA",
-      "company_name": "Hella Chemical Market Private Limited",
-      "tags": ["Hella"],
-    },
-    {
-      "logo":
-          "https://cdn.brandfetch.io/idVluv2fZa/w/200/h/200/theme/dark/icon.jpeg?c=1dxbfHSJFAPEGdCLU4o5B",
-      "isin": "INE06E502345",
-      "rating": "AAA",
-      "company_name": "Hella Chemical Market Private Limited",
-      "tags": ["Hella"],
-    },
-    {
-      "logo":
-          "https://cdn.brandfetch.io/idVluv2fZa/w/200/h/200/theme/dark/icon.jpeg?c=1dxbfHSJFAPEGdCLU4o5B",
-      "isin": "INE06E508653",
-      "rating": "AAA",
-      "company_name": "Hella Chemical Market Private Limited",
-      "tags": ["Hella"],
-    },
-    {
-      "logo":
-          "https://cdn.brandfetch.io/idVluv2fZa/w/200/h/200/theme/dark/icon.jpeg?c=1dxbfHSJFAPEGdCLU4o5B",
-      "isin": "INE06E509123",
-      "rating": "AA+",
-      "company_name": "Infra Steel Industries Ltd.",
-      "tags": ["Infra", "Steel"],
-    },
-  ];
-
   final List<CompanyModel> companyModelListData =
-      jsonData.map((e) => CompanyModel.fromJson(e)).toList();
+      DataModelFactory.getCompanyListData();
 
   tearDown(() {
     companyListCubit.close();
@@ -73,7 +40,7 @@ void main() {
     act: (CompanyListCubit cubit) {
       when(
         companyListRepositoryMock.fetchCompanyListData,
-      ).thenAnswer((_) async => [jsonData]);
+      ).thenAnswer((_) async => [companyModelListData]);
       cubit.fetchCompanyListData();
     },
     expect:

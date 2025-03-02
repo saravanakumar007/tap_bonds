@@ -38,6 +38,7 @@ class FinancialViewWidget extends StatelessWidget {
                         await HapticFeedback.mediumImpact();
                       },
                       child: Container(
+                        key: ValueKey('ISIN_Analysis'),
                         padding: EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
                           border:
@@ -73,6 +74,7 @@ class FinancialViewWidget extends StatelessWidget {
                         await HapticFeedback.mediumImpact();
                       },
                       child: Container(
+                        key: ValueKey('pros_and_cons'),
                         padding: EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
                           border:
