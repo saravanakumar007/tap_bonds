@@ -38,6 +38,7 @@ abstract class IssuerDetails with _$IssuerDetails {
     @JsonKey(name: 'type_of_issuer') required String typeOfIssuer,
     @JsonKey(name: 'lead_manager') required String leadManager,
     @JsonKey(name: 'debenture_trustee') required String debentureTrustee,
+    @JsonKey(name: 'issuer_nature') required String issuerNature,
     required String sector,
     required String industry,
     required String cin,

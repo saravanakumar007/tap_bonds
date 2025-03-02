@@ -128,27 +128,30 @@ class CompanyWidget extends StatelessWidget {
 
     final List<String> searchWords = query.trim().split(' ');
     final List<String> contentWords = data.trim().split(' ');
-    final List<String> words = [];
-    for (final String content in contentWords) {
+
+    for (int i = 0; i < contentWords.length; i++) {
+      String content = contentWords[i];
+
+      bool isMatched = false;
       for (final String word in searchWords) {
-        if (!words.contains(content)) {
-          words.add(content);
-          textSpans.add(
-            WidgetSpan(
-              child: Container(
-                padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  color:
-                      content.toLowerCase() == word.toLowerCase()
-                          ? HexColor('#fbecd7')
-                          : Colors.transparent,
-                ),
-                child: Text(content, style: textStyle),
-              ),
-            ),
-          );
+        if (content.toLowerCase() == word.toLowerCase()) {
+          isMatched = true;
+          break;
         }
       }
+
+      textSpans.add(
+        WidgetSpan(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 2, horizontal: 2),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              color: isMatched ? HexColor('#fbecd7') : Colors.transparent,
+            ),
+            child: Text(content, style: textStyle),
+          ),
+        ),
+      );
     }
     return Text.rich(TextSpan(children: <InlineSpan>[...textSpans]));
   }

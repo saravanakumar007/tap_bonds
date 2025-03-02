@@ -360,7 +360,7 @@ as int,
 /// @nodoc
 mixin _$IssuerDetails {
 
-@JsonKey(name: 'issuer_name') String get issuerName;@JsonKey(name: 'type_of_issuer') String get typeOfIssuer;@JsonKey(name: 'lead_manager') String get leadManager;@JsonKey(name: 'debenture_trustee') String get debentureTrustee; String get sector; String get industry; String get cin; String get registrar;
+@JsonKey(name: 'issuer_name') String get issuerName;@JsonKey(name: 'type_of_issuer') String get typeOfIssuer;@JsonKey(name: 'lead_manager') String get leadManager;@JsonKey(name: 'debenture_trustee') String get debentureTrustee;@JsonKey(name: 'issuer_nature') String get issuerNature; String get sector; String get industry; String get cin; String get registrar;
 /// Create a copy of IssuerDetails
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -373,16 +373,16 @@ $IssuerDetailsCopyWith<IssuerDetails> get copyWith => _$IssuerDetailsCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is IssuerDetails&&(identical(other.issuerName, issuerName) || other.issuerName == issuerName)&&(identical(other.typeOfIssuer, typeOfIssuer) || other.typeOfIssuer == typeOfIssuer)&&(identical(other.leadManager, leadManager) || other.leadManager == leadManager)&&(identical(other.debentureTrustee, debentureTrustee) || other.debentureTrustee == debentureTrustee)&&(identical(other.sector, sector) || other.sector == sector)&&(identical(other.industry, industry) || other.industry == industry)&&(identical(other.cin, cin) || other.cin == cin)&&(identical(other.registrar, registrar) || other.registrar == registrar));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is IssuerDetails&&(identical(other.issuerName, issuerName) || other.issuerName == issuerName)&&(identical(other.typeOfIssuer, typeOfIssuer) || other.typeOfIssuer == typeOfIssuer)&&(identical(other.leadManager, leadManager) || other.leadManager == leadManager)&&(identical(other.debentureTrustee, debentureTrustee) || other.debentureTrustee == debentureTrustee)&&(identical(other.issuerNature, issuerNature) || other.issuerNature == issuerNature)&&(identical(other.sector, sector) || other.sector == sector)&&(identical(other.industry, industry) || other.industry == industry)&&(identical(other.cin, cin) || other.cin == cin)&&(identical(other.registrar, registrar) || other.registrar == registrar));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,issuerName,typeOfIssuer,leadManager,debentureTrustee,sector,industry,cin,registrar);
+int get hashCode => Object.hash(runtimeType,issuerName,typeOfIssuer,leadManager,debentureTrustee,issuerNature,sector,industry,cin,registrar);
 
 @override
 String toString() {
-  return 'IssuerDetails(issuerName: $issuerName, typeOfIssuer: $typeOfIssuer, leadManager: $leadManager, debentureTrustee: $debentureTrustee, sector: $sector, industry: $industry, cin: $cin, registrar: $registrar)';
+  return 'IssuerDetails(issuerName: $issuerName, typeOfIssuer: $typeOfIssuer, leadManager: $leadManager, debentureTrustee: $debentureTrustee, issuerNature: $issuerNature, sector: $sector, industry: $industry, cin: $cin, registrar: $registrar)';
 }
 
 
@@ -393,7 +393,7 @@ abstract mixin class $IssuerDetailsCopyWith<$Res>  {
   factory $IssuerDetailsCopyWith(IssuerDetails value, $Res Function(IssuerDetails) _then) = _$IssuerDetailsCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'issuer_name') String issuerName,@JsonKey(name: 'type_of_issuer') String typeOfIssuer,@JsonKey(name: 'lead_manager') String leadManager,@JsonKey(name: 'debenture_trustee') String debentureTrustee, String sector, String industry, String cin, String registrar
+@JsonKey(name: 'issuer_name') String issuerName,@JsonKey(name: 'type_of_issuer') String typeOfIssuer,@JsonKey(name: 'lead_manager') String leadManager,@JsonKey(name: 'debenture_trustee') String debentureTrustee,@JsonKey(name: 'issuer_nature') String issuerNature, String sector, String industry, String cin, String registrar
 });
 
 
@@ -410,12 +410,13 @@ class _$IssuerDetailsCopyWithImpl<$Res>
 
 /// Create a copy of IssuerDetails
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? issuerName = null,Object? typeOfIssuer = null,Object? leadManager = null,Object? debentureTrustee = null,Object? sector = null,Object? industry = null,Object? cin = null,Object? registrar = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? issuerName = null,Object? typeOfIssuer = null,Object? leadManager = null,Object? debentureTrustee = null,Object? issuerNature = null,Object? sector = null,Object? industry = null,Object? cin = null,Object? registrar = null,}) {
   return _then(_self.copyWith(
 issuerName: null == issuerName ? _self.issuerName : issuerName // ignore: cast_nullable_to_non_nullable
 as String,typeOfIssuer: null == typeOfIssuer ? _self.typeOfIssuer : typeOfIssuer // ignore: cast_nullable_to_non_nullable
 as String,leadManager: null == leadManager ? _self.leadManager : leadManager // ignore: cast_nullable_to_non_nullable
 as String,debentureTrustee: null == debentureTrustee ? _self.debentureTrustee : debentureTrustee // ignore: cast_nullable_to_non_nullable
+as String,issuerNature: null == issuerNature ? _self.issuerNature : issuerNature // ignore: cast_nullable_to_non_nullable
 as String,sector: null == sector ? _self.sector : sector // ignore: cast_nullable_to_non_nullable
 as String,industry: null == industry ? _self.industry : industry // ignore: cast_nullable_to_non_nullable
 as String,cin: null == cin ? _self.cin : cin // ignore: cast_nullable_to_non_nullable
@@ -431,13 +432,14 @@ as String,
 @JsonSerializable()
 
 class _IssuerDetails implements IssuerDetails {
-  const _IssuerDetails({@JsonKey(name: 'issuer_name') required this.issuerName, @JsonKey(name: 'type_of_issuer') required this.typeOfIssuer, @JsonKey(name: 'lead_manager') required this.leadManager, @JsonKey(name: 'debenture_trustee') required this.debentureTrustee, required this.sector, required this.industry, required this.cin, required this.registrar});
+  const _IssuerDetails({@JsonKey(name: 'issuer_name') required this.issuerName, @JsonKey(name: 'type_of_issuer') required this.typeOfIssuer, @JsonKey(name: 'lead_manager') required this.leadManager, @JsonKey(name: 'debenture_trustee') required this.debentureTrustee, @JsonKey(name: 'issuer_nature') required this.issuerNature, required this.sector, required this.industry, required this.cin, required this.registrar});
   factory _IssuerDetails.fromJson(Map<String, dynamic> json) => _$IssuerDetailsFromJson(json);
 
 @override@JsonKey(name: 'issuer_name') final  String issuerName;
 @override@JsonKey(name: 'type_of_issuer') final  String typeOfIssuer;
 @override@JsonKey(name: 'lead_manager') final  String leadManager;
 @override@JsonKey(name: 'debenture_trustee') final  String debentureTrustee;
+@override@JsonKey(name: 'issuer_nature') final  String issuerNature;
 @override final  String sector;
 @override final  String industry;
 @override final  String cin;
@@ -456,16 +458,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IssuerDetails&&(identical(other.issuerName, issuerName) || other.issuerName == issuerName)&&(identical(other.typeOfIssuer, typeOfIssuer) || other.typeOfIssuer == typeOfIssuer)&&(identical(other.leadManager, leadManager) || other.leadManager == leadManager)&&(identical(other.debentureTrustee, debentureTrustee) || other.debentureTrustee == debentureTrustee)&&(identical(other.sector, sector) || other.sector == sector)&&(identical(other.industry, industry) || other.industry == industry)&&(identical(other.cin, cin) || other.cin == cin)&&(identical(other.registrar, registrar) || other.registrar == registrar));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IssuerDetails&&(identical(other.issuerName, issuerName) || other.issuerName == issuerName)&&(identical(other.typeOfIssuer, typeOfIssuer) || other.typeOfIssuer == typeOfIssuer)&&(identical(other.leadManager, leadManager) || other.leadManager == leadManager)&&(identical(other.debentureTrustee, debentureTrustee) || other.debentureTrustee == debentureTrustee)&&(identical(other.issuerNature, issuerNature) || other.issuerNature == issuerNature)&&(identical(other.sector, sector) || other.sector == sector)&&(identical(other.industry, industry) || other.industry == industry)&&(identical(other.cin, cin) || other.cin == cin)&&(identical(other.registrar, registrar) || other.registrar == registrar));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,issuerName,typeOfIssuer,leadManager,debentureTrustee,sector,industry,cin,registrar);
+int get hashCode => Object.hash(runtimeType,issuerName,typeOfIssuer,leadManager,debentureTrustee,issuerNature,sector,industry,cin,registrar);
 
 @override
 String toString() {
-  return 'IssuerDetails(issuerName: $issuerName, typeOfIssuer: $typeOfIssuer, leadManager: $leadManager, debentureTrustee: $debentureTrustee, sector: $sector, industry: $industry, cin: $cin, registrar: $registrar)';
+  return 'IssuerDetails(issuerName: $issuerName, typeOfIssuer: $typeOfIssuer, leadManager: $leadManager, debentureTrustee: $debentureTrustee, issuerNature: $issuerNature, sector: $sector, industry: $industry, cin: $cin, registrar: $registrar)';
 }
 
 
@@ -476,7 +478,7 @@ abstract mixin class _$IssuerDetailsCopyWith<$Res> implements $IssuerDetailsCopy
   factory _$IssuerDetailsCopyWith(_IssuerDetails value, $Res Function(_IssuerDetails) _then) = __$IssuerDetailsCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'issuer_name') String issuerName,@JsonKey(name: 'type_of_issuer') String typeOfIssuer,@JsonKey(name: 'lead_manager') String leadManager,@JsonKey(name: 'debenture_trustee') String debentureTrustee, String sector, String industry, String cin, String registrar
+@JsonKey(name: 'issuer_name') String issuerName,@JsonKey(name: 'type_of_issuer') String typeOfIssuer,@JsonKey(name: 'lead_manager') String leadManager,@JsonKey(name: 'debenture_trustee') String debentureTrustee,@JsonKey(name: 'issuer_nature') String issuerNature, String sector, String industry, String cin, String registrar
 });
 
 
@@ -493,12 +495,13 @@ class __$IssuerDetailsCopyWithImpl<$Res>
 
 /// Create a copy of IssuerDetails
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? issuerName = null,Object? typeOfIssuer = null,Object? leadManager = null,Object? debentureTrustee = null,Object? sector = null,Object? industry = null,Object? cin = null,Object? registrar = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? issuerName = null,Object? typeOfIssuer = null,Object? leadManager = null,Object? debentureTrustee = null,Object? issuerNature = null,Object? sector = null,Object? industry = null,Object? cin = null,Object? registrar = null,}) {
   return _then(_IssuerDetails(
 issuerName: null == issuerName ? _self.issuerName : issuerName // ignore: cast_nullable_to_non_nullable
 as String,typeOfIssuer: null == typeOfIssuer ? _self.typeOfIssuer : typeOfIssuer // ignore: cast_nullable_to_non_nullable
 as String,leadManager: null == leadManager ? _self.leadManager : leadManager // ignore: cast_nullable_to_non_nullable
 as String,debentureTrustee: null == debentureTrustee ? _self.debentureTrustee : debentureTrustee // ignore: cast_nullable_to_non_nullable
+as String,issuerNature: null == issuerNature ? _self.issuerNature : issuerNature // ignore: cast_nullable_to_non_nullable
 as String,sector: null == sector ? _self.sector : sector // ignore: cast_nullable_to_non_nullable
 as String,industry: null == industry ? _self.industry : industry // ignore: cast_nullable_to_non_nullable
 as String,cin: null == cin ? _self.cin : cin // ignore: cast_nullable_to_non_nullable

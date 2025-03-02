@@ -37,7 +37,7 @@ class _CompanyListPageState extends State<CompanyListPage> {
     );
     return Scaffold(
       backgroundColor: HexColor('#F3F4F6'),
-
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: HexColor('#F3F4F6'),
@@ -90,39 +90,82 @@ class _CompanyListPageState extends State<CompanyListPage> {
               ),
             ),
             SizedBox(height: 10),
-            Expanded(
-              child: BlocBuilder<CompanyListCubit, CompanyListState>(
-                builder: (context, state) {
-                  if (state is CompanyListStateInitial ||
-                      state is CompanyListStateInProgress) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                      ),
-                    );
-                  } else if (state is CompanyListStateSuccess) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: ListView.separated(
-                        separatorBuilder:
-                            (context, index) => SizedBox(height: 20),
-                        padding: EdgeInsets.all(20),
-                        itemCount: state.data.length,
-                        itemBuilder:
-                            (context, index) => CompanyWidget(
-                              companyModel: state.data[index],
-                              searchQuery: searchtextEditingController.text,
+            BlocBuilder<CompanyListCubit, CompanyListState>(
+              builder: (context, state) {
+                if (state is CompanyListStateInitial ||
+                    state is CompanyListStateInProgress) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                    ),
+                  );
+                } else if (state is CompanyListStateSuccess) {
+                  return state.data.isNotEmpty
+                      ? Container(
+                        constraints: BoxConstraints(
+                          maxHeight: MediaQuery.of(context).size.height * 0.7,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Flexible(
+                              child: ListView.separated(
+                                shrinkWrap: true,
+                                separatorBuilder:
+                                    (context, index) => SizedBox(height: 20),
+                                padding: EdgeInsets.all(20),
+                                itemCount: state.data.length,
+                                itemBuilder:
+                                    (context, index) => CompanyWidget(
+                                      companyModel: state.data[index],
+                                      searchQuery:
+                                          searchtextEditingController.text,
+                                    ),
+                              ),
                             ),
+                          ],
+                        ),
+                      )
+                      : Container(
+                        height: MediaQuery.of(context).size.height * 0.2,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          color: Colors.white,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'No Data Found',
+                            style: GoogleFonts.inter(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: HexColor('#101828'),
+                            ),
+                          ),
+                        ),
+                      );
+                } else {
+                  return Container(
+                    height: 500,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(color: Colors.white),
+                    child: Center(
+                      child: Text(
+                        'No Data Found',
+                        style: GoogleFonts.inter(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: HexColor('#101828'),
+                        ),
                       ),
-                    );
-                  } else {
-                    return Container();
-                  }
-                },
-              ),
+                    ),
+                  );
+                }
+              },
             ),
           ],
         ),

@@ -13,6 +13,8 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:tap_bonds/business_logic/company_detail/company_detail_cubit.dart'
     as _i416;
+import 'package:tap_bonds/business_logic/company_financials/company_financials_cubit.dart'
+    as _i319;
 import 'package:tap_bonds/business_logic/company_list/company_list_cubit.dart'
     as _i1029;
 import 'package:tap_bonds/business_logic/splash/splash_cubit.dart' as _i968;
@@ -30,6 +32,9 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.factory<_i968.SplashCubit>(() => _i968.SplashCubit());
+    gh.factory<_i319.CompanyFinancialsCubit>(
+      () => _i319.CompanyFinancialsCubit(),
+    );
     gh.singleton<_i758.ApiClientService>(() => _i758.ApiClientService());
     gh.singleton<_i1026.CompanyListRepository>(
       () => _i1026.CompanyListRepository(gh<_i758.ApiClientService>()),

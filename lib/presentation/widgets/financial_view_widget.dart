@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tap_bonds/presentation/widgets/chart_widget.dart';
+import 'package:tap_bonds/business_logic/company_financials/company_financials_cubit.dart';
+import 'package:tap_bonds/business_logic/company_financials/company_financials_state.dart';
+import 'package:tap_bonds/data/models/company_detail_model/company_detail_model.dart';
+import 'package:tap_bonds/presentation/widgets/financial_data_widget.dart';
+import 'package:tap_bonds/presentation/widgets/issuer_details_widget.dart';
 import 'package:tap_bonds/utils/extensions.dart';
 
-class CompanyDataWidget extends StatelessWidget {
-  const CompanyDataWidget({super.key});
+class FinancialViewWidget extends StatelessWidget {
+  const FinancialViewWidget({super.key, required this.companyDetailModel});
+
+  final CompanyDetailModel companyDetailModel;
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<int> tabSelectionNotifier = ValueNotifier(0);
-    return ValueListenableBuilder(
-      valueListenable: tabSelectionNotifier,
+    return BlocBuilder<CompanyFinancialsCubit, CompanyFinancialState>(
       builder:
-          (context, int value, child) => Column(
+          (context, state) => Column(
             children: [
               SizedBox(height: 20),
               Container(
@@ -24,12 +29,16 @@ class CompanyDataWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        BlocProvider.of<CompanyFinancialsCubit>(
+                          context,
+                        ).changeTabType(TabType.isinAnalysisTab);
+                      },
                       child: Container(
                         padding: EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
                           border:
-                              value == 0
+                              state.tapType == TabType.isinAnalysisTab
                                   ? Border(
                                     bottom: BorderSide(
                                       width: 4,
@@ -43,19 +52,27 @@ class CompanyDataWidget extends StatelessWidget {
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.w600,
                             fontSize: 15,
-                            color: HexColor('#1447E6'),
+                            color: HexColor(
+                              state.tapType == TabType.isinAnalysisTab
+                                  ? '#1447E6'
+                                  : '#4A5565',
+                            ),
                           ),
                         ),
                       ),
                     ),
                     SizedBox(width: 20),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        BlocProvider.of<CompanyFinancialsCubit>(
+                          context,
+                        ).changeTabType(TabType.prosAndConsTab);
+                      },
                       child: Container(
                         padding: EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
                           border:
-                              value == 1
+                              state.tapType == TabType.prosAndConsTab
                                   ? Border(
                                     bottom: BorderSide(
                                       width: 4,
@@ -69,7 +86,11 @@ class CompanyDataWidget extends StatelessWidget {
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.w500,
                             fontSize: 15,
-                            color: HexColor('#4A5565'),
+                            color: HexColor(
+                              state.tapType == TabType.prosAndConsTab
+                                  ? '#1447E6'
+                                  : '#4A5565',
+                            ),
                           ),
                         ),
                       ),
@@ -77,10 +98,18 @@ class CompanyDataWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(children: [ChartWidget()]),
-                ),
+              Column(
+                children: [
+                  SizedBox(height: 20),
+                  FinancialDataWidget(
+                    companyFinancialState: state,
+                    companyDetailModel: companyDetailModel,
+                  ),
+                  SizedBox(height: 30),
+                  IssuerDetailsWidget(
+                    issuerDetailsData: companyDetailModel.issuerDetails!,
+                  ),
+                ],
               ),
             ],
           ),
