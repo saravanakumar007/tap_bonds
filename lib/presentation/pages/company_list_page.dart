@@ -94,16 +94,18 @@ class _CompanyListPageState extends State<CompanyListPage> {
               builder: (context, state) {
                 if (state is CompanyListStateInitial ||
                     state is CompanyListStateInProgress) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                  return Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                      ),
                     ),
                   );
                 } else if (state is CompanyListStateSuccess) {
                   return state.data.isNotEmpty
                       ? Container(
                         constraints: BoxConstraints(
-                          maxHeight: MediaQuery.of(context).size.height * 0.7,
+                          maxHeight: MediaQuery.of(context).size.height * 0.65,
                         ),
                         decoration: BoxDecoration(
                           color: Colors.white,

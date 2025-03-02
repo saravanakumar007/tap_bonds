@@ -23,7 +23,7 @@ class CompanyWidget extends StatelessWidget {
 
     return ListTile(
       onTap: () {
-        context.go('/company-detail');
+        context.push('/company-detail');
       },
       titleAlignment: ListTileTitleAlignment.center,
       contentPadding: EdgeInsets.all(0),
@@ -49,9 +49,7 @@ class CompanyWidget extends StatelessWidget {
                 padding: EdgeInsets.all(2),
                 decoration: BoxDecoration(
                   color:
-                      hasQuery &&
-                              defaultData.toLowerCase() ==
-                                  searchQuery.trim().toLowerCase()
+                      hasQuery && isMatched(searchQuery, defaultData)
                           ? HexColor('#fbecd7')
                           : Colors.transparent,
                 ),
@@ -61,7 +59,7 @@ class CompanyWidget extends StatelessWidget {
                   style: GoogleFonts.inter(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
-                    color: HexColor('#101828'),
+                    color: Color.fromRGBO(16, 24, 40, 0.7),
                   ),
                 ),
               ),
