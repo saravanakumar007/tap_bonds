@@ -67,11 +67,11 @@ class FinancialDataWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     InkWell(
-                      onTap: () {
-                        HapticFeedback.mediumImpact();
+                      onTap: () async {
                         BlocProvider.of<CompanyFinancialsCubit>(
                           context,
                         ).changeChartType(FinancialChartType.ebitda);
+                        await HapticFeedback.mediumImpact();
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(
@@ -110,11 +110,11 @@ class FinancialDataWidget extends StatelessWidget {
                     ),
 
                     InkWell(
-                      onTap: () {
-                        HapticFeedback.mediumImpact();
+                      onTap: () async {
                         BlocProvider.of<CompanyFinancialsCubit>(
                           context,
                         ).changeChartType(FinancialChartType.revenue);
+                        await HapticFeedback.mediumImpact();
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(

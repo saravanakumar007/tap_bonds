@@ -6,6 +6,6 @@ import 'package:tap_bonds/injection.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const App());
 }

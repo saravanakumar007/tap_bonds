@@ -23,9 +23,9 @@ class CompanyWidget extends StatelessWidget {
     final bool hasQuery = searchQuery.trim().isNotEmpty;
 
     return ListTile(
-      onTap: () {
-        HapticFeedback.mediumImpact();
+      onTap: () async {
         context.push('/company-detail');
+        await HapticFeedback.mediumImpact();
       },
       titleAlignment: ListTileTitleAlignment.center,
       contentPadding: EdgeInsets.all(0),
@@ -36,7 +36,7 @@ class CompanyWidget extends StatelessWidget {
           shape: BoxShape.circle,
           border: Border.all(width: 0.8, color: HexColor('#E5E7EB')),
         ),
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.all(8),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: CachedNetworkImage(imageUrl: companyModel.logo),

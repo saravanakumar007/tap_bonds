@@ -31,11 +31,11 @@ class FinancialViewWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     InkWell(
-                      onTap: () {
-                        HapticFeedback.mediumImpact();
+                      onTap: () async {
                         BlocProvider.of<CompanyFinancialsCubit>(
                           context,
                         ).changeTabType(TabType.isinAnalysisTab);
+                        await HapticFeedback.mediumImpact();
                       },
                       child: Container(
                         padding: EdgeInsets.only(bottom: 10),
@@ -66,11 +66,11 @@ class FinancialViewWidget extends StatelessWidget {
                     ),
                     SizedBox(width: 20),
                     InkWell(
-                      onTap: () {
-                        HapticFeedback.mediumImpact();
+                      onTap: () async {
                         BlocProvider.of<CompanyFinancialsCubit>(
                           context,
                         ).changeTabType(TabType.prosAndConsTab);
+                        await HapticFeedback.mediumImpact();
                       },
                       child: Container(
                         padding: EdgeInsets.only(bottom: 10),

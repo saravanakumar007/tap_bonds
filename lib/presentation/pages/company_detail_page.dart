@@ -53,9 +53,9 @@ class _CompanyDetailPageState extends State<CompanyDetailPage> {
                   children: [
                     SizedBox(height: MediaQuery.of(context).viewPadding.top),
                     GestureDetector(
-                      onTap: () {
-                        HapticFeedback.mediumImpact();
+                      onTap: () async {
                         context.pop();
+                        await HapticFeedback.mediumImpact();
                       },
                       child: Container(
                         height: 50,
