@@ -33,13 +33,12 @@ class _SplashPageState extends State<SplashPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(Images.logo),
-                if (state == SplashState.fetchingInitialData()) ...[
-                  SizedBox(height: 100),
-                  CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                  ),
-                ],
+                Image.asset(Images.logo, height: 100, width: 100),
+
+                SizedBox(height: 100),
+                CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                ),
               ],
             ),
           ),
