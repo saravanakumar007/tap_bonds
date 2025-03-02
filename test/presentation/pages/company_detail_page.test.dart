@@ -110,5 +110,28 @@ void main() {
         expect(find.byType(IssuerDetailsWidget), findsOneWidget);
       });
     });
+
+    testWidgets('Ensure the Chart Type Changing', (tester) async {
+      await tester.runAsync(() async {
+        when(
+          () => companyDetailCubit.state,
+        ).thenReturn(CompanyDetailState.success(data: companyDetail));
+
+        when(
+          () => companyDetailCubit.fetchCompanyDetailData(),
+        ).thenAnswer((_) => Future.value(companyDetail));
+
+        await tester.pumpWidget(CompanyDetailPage());
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.byKey(Key('revenue')));
+
+        expect(find.byType(ChartWidget), findsOneWidget);
+
+        await tester.tap(find.byKey(Key('ebitda')));
+        expect(find.byType(ChartWidget), findsOneWidget);
+        expect(find.byType(IssuerDetailsWidget), findsOneWidget);
+      });
+    });
   });
 }

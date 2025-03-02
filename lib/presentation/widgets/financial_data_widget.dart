@@ -74,6 +74,7 @@ class FinancialDataWidget extends StatelessWidget {
                         await HapticFeedback.mediumImpact();
                       },
                       child: Container(
+                        key: ValueKey('ebitda'),
                         padding: EdgeInsets.symmetric(
                           vertical: 5,
                           horizontal: 10,
@@ -117,6 +118,7 @@ class FinancialDataWidget extends StatelessWidget {
                         await HapticFeedback.mediumImpact();
                       },
                       child: Container(
+                        key: ValueKey('revenue'),
                         padding: EdgeInsets.symmetric(
                           vertical: 5,
                           horizontal: 10,
