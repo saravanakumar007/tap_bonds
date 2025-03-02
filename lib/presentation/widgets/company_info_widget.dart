@@ -63,7 +63,7 @@ class CompanyInfoWidget extends StatelessWidget {
               ),
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: Text(
-                companyDetailModel.isin,
+                'ISIN: ${companyDetailModel.isin}',
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w400,
                   fontSize: 16,

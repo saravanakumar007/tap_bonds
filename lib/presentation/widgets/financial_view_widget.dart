@@ -6,6 +6,7 @@ import 'package:tap_bonds/business_logic/company_financials/company_financials_s
 import 'package:tap_bonds/data/models/company_detail_model/company_detail_model.dart';
 import 'package:tap_bonds/presentation/widgets/financial_data_widget.dart';
 import 'package:tap_bonds/presentation/widgets/issuer_details_widget.dart';
+import 'package:tap_bonds/presentation/widgets/prod_and_cons_widget.dart';
 import 'package:tap_bonds/utils/extensions.dart';
 
 class FinancialViewWidget extends StatelessWidget {
@@ -101,14 +102,22 @@ class FinancialViewWidget extends StatelessWidget {
               Column(
                 children: [
                   SizedBox(height: 20),
-                  FinancialDataWidget(
-                    companyFinancialState: state,
-                    companyDetailModel: companyDetailModel,
-                  ),
-                  SizedBox(height: 30),
-                  IssuerDetailsWidget(
-                    issuerDetailsData: companyDetailModel.issuerDetails!,
-                  ),
+
+                  if (state.tapType == TabType.isinAnalysisTab) ...[
+                    FinancialDataWidget(
+                      companyFinancialState: state,
+                      companyDetailModel: companyDetailModel,
+                    ),
+                    SizedBox(height: 30),
+                    IssuerDetailsWidget(
+                      issuerDetailsData: companyDetailModel.issuerDetails!,
+                    ),
+                  ] else ...[
+                    ProdAndConsWidget(
+                      pros: companyDetailModel.pros,
+                      cons: companyDetailModel.cons,
+                    ),
+                  ],
                 ],
               ),
             ],
