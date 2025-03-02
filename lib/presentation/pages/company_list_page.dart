@@ -65,6 +65,7 @@ class _CompanyListPageState extends State<CompanyListPage> {
                   List.from(actualCompanyData),
                 );
               },
+              cursorColor: Colors.black,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search, color: HexColor('#6A7282')),
                 fillColor: Colors.white,

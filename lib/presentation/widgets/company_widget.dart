@@ -48,6 +48,7 @@ class CompanyWidget extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(2),
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
                   color:
                       hasQuery && isMatched(searchQuery, defaultData)
                           ? HexColor('#fbecd7')
@@ -69,6 +70,7 @@ class CompanyWidget extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(2),
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
                   color:
                       hasQuery &&
                               isMatched(
@@ -143,7 +145,7 @@ class CompanyWidget extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 2, horizontal: 2),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(6),
               color: isMatched ? HexColor('#fbecd7') : Colors.transparent,
             ),
             child: Text(content, style: textStyle),
