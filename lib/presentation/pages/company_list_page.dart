@@ -31,10 +31,6 @@ class _CompanyListPageState extends State<CompanyListPage> {
 
   @override
   Widget build(BuildContext context) {
-    final OutlineInputBorder border = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: BorderSide(width: 1, color: HexColor('#E5E7EB')),
-    );
     return Scaffold(
       backgroundColor: HexColor('#F3F4F6'),
       resizeToAvoidBottomInset: false,
@@ -54,125 +50,124 @@ class _CompanyListPageState extends State<CompanyListPage> {
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              key: ValueKey('search_bar'),
-              controller: searchtextEditingController,
-              onChanged: (value) {
-                BlocProvider.of<CompanyListCubit>(context).onSearchValueChange(
-                  searchtextEditingController.text,
-                  List.from(actualCompanyData),
-                );
-              },
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search, color: HexColor('#6A7282')),
-                fillColor: Colors.white,
-                filled: true,
-                border: border,
-                enabledBorder: border,
-                focusedBorder: border,
-                hintText: 'Search by Issuer Name or ISIN',
-                hintStyle: GoogleFonts.inter(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15,
-                  color: HexColor('#99A1AF'),
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'SUGGESTED RESULTS',
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.w600,
-                fontSize: 18,
-                color: HexColor('#99A1AF'),
-              ),
-            ),
-            SizedBox(height: 10),
-            BlocBuilder<CompanyListCubit, CompanyListState>(
-              builder: (context, state) {
-                if (state is CompanyListStateInitial ||
-                    state is CompanyListStateInProgress) {
-                  return Expanded(
+        child: BlocBuilder<CompanyListCubit, CompanyListState>(
+          builder: (context, state) {
+            if (state is CompanyListStateInitial ||
+                state is CompanyListStateInProgress) {
+              return Column(
+                children: [
+                  Expanded(
                     child: Center(
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
                       ),
                     ),
-                  );
-                } else if (state is CompanyListStateSuccess) {
-                  return state.data.isNotEmpty
-                      ? Container(
-                        constraints: BoxConstraints(
-                          maxHeight: MediaQuery.of(context).size.height * 0.65,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Flexible(
-                              child: ListView.separated(
-                                shrinkWrap: true,
-                                separatorBuilder:
-                                    (context, index) => SizedBox(height: 20),
-                                padding: EdgeInsets.all(20),
-                                itemCount: state.data.length,
-                                itemBuilder:
-                                    (context, index) => CompanyWidget(
-                                      companyModel: state.data[index],
-                                      searchQuery:
-                                          searchtextEditingController.text,
-                                    ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                      : Container(
-                        height: MediaQuery.of(context).size.height * 0.2,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: Colors.white,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'No Data Found',
-                            style: GoogleFonts.inter(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: HexColor('#101828'),
-                            ),
-                          ),
-                        ),
-                      );
-                } else {
-                  return Container(
-                    height: 500,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(color: Colors.white),
+                  ),
+                ],
+              );
+            } else if (state is CompanyListStateSuccess) {
+              return _builtCompanyListWidgets(state.data);
+            }
+            return Container();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _builtCompanyListWidgets(List<CompanyModel> companyList) {
+    final OutlineInputBorder border = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: BorderSide(width: 1, color: HexColor('#E5E7EB')),
+    );
+
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextField(
+            key: ValueKey('search_bar'),
+            controller: searchtextEditingController,
+            onChanged: (value) {
+              BlocProvider.of<CompanyListCubit>(context).onSearchValueChange(
+                searchtextEditingController.text,
+                List.from(actualCompanyData),
+              );
+            },
+            cursorColor: Colors.black,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.search, color: HexColor('#6A7282')),
+              fillColor: Colors.white,
+              filled: true,
+              border: border,
+              enabledBorder: border,
+              focusedBorder: border,
+              hintText: 'Search by Issuer Name or ISIN',
+              hintStyle: GoogleFonts.inter(
+                fontWeight: FontWeight.w400,
+                fontSize: 15,
+                color: HexColor('#99A1AF'),
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          Text(
+            'SUGGESTED RESULTS',
+            style: GoogleFonts.inter(
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
+              color: HexColor('#99A1AF'),
+            ),
+          ),
+          SizedBox(height: 10),
+
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (companyList.isEmpty) ...[
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Colors.white,
+                    ),
                     child: Center(
                       child: Text(
                         'No Data Found',
                         style: GoogleFonts.inter(
-                          fontSize: 12,
+                          fontSize: 20,
                           fontWeight: FontWeight.w500,
                           color: HexColor('#101828'),
                         ),
                       ),
                     ),
-                  );
-                }
-              },
+                  ),
+                ] else ...[
+                  ...List.generate(
+                    companyList.length,
+                    (int index) => Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
+                      child: CompanyWidget(
+                        companyModel: companyList[index],
+                        searchQuery: searchtextEditingController.text,
+                      ),
+                    ),
+                  ),
+                ],
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
