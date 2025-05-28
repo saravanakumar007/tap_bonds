@@ -85,4 +85,6 @@ Once the job is configured, you can trigger the pipeline in several ways:
 *   **SCM Polling:** Configure the job to periodically poll the Git repository for changes.
 *   **Webhooks:** For more immediate builds, configure webhooks in your Git repository provider (e.g., GitHub, GitLab) to notify Jenkins upon new commits.
 
-The pipeline will then execute the stages defined in the `Jenkinsfile`: Checkout, Install Dependencies, Run Tests, Build Android APK, and conditionally Build iOS. Check the "Console Output" for detailed logs of the build process.
+The pipeline will then execute the stages defined in the `Jenkinsfile`: Checkout, Install Dependencies, Run Tests, Build Android APK, and conditionally Build iOS.
+During the 'Run Tests' stage, tests are executed with the `--coverage` flag, and the resulting `coverage/lcov.info` file is archived as a build artifact. This report provides insights into code test coverage.
+Check the "Console Output" for detailed logs of the build process and the "Artifacts" section for the coverage report.

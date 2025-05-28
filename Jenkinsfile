@@ -40,7 +40,8 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'flutter test'
+                sh 'flutter test --coverage'
+                archiveArtifacts artifacts: 'coverage/lcov.info', fingerprint: true
             }
         }
 
